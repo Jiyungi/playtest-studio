@@ -16,7 +16,7 @@ const loopNoteEl = document.getElementById("loop-note")!;
 const runBtn = document.getElementById("run-playtest") as HTMLButtonElement;
 
 function gameUrl(extra: Record<string, string> = {}): string {
-  const base = game?.playUrl ?? "/play.html";
+  const base = game?.playUrl ?? "play.html";
   const p = new URLSearchParams({ t: encodeTuning(tuning), ...extra });
   return `${base}?${p.toString()}`;
 }

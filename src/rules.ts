@@ -37,7 +37,9 @@ export interface GameManifest {
 
 /** Fetch the manifest and return the currently active game definition. */
 export async function loadActiveGame(): Promise<GameDef> {
-  const res = await fetch("/games.json", { cache: "no-store" });
+  // BASE_URL is "/" locally and "/playtest-studio/" on the GitHub Pages build,
+  // so the manifest resolves correctly under a subpath deploy.
+  const res = await fetch(`${import.meta.env.BASE_URL}games.json`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Could not load games.json (${res.status})`);
   const manifest = (await res.json()) as GameManifest;
   const game = manifest.games[manifest.activeGame];

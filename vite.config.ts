@@ -23,6 +23,10 @@ function emitManifest() {
 
 export default defineConfig({
   root: ".",
+  // Local dev/preview and Vercel serve at the root ("/"). GitHub Pages serves a
+  // project site under a subpath, so the Pages build sets BASE_PATH at build
+  // time (see .github/workflows/deploy-pages.yml). Defaults to "/" everywhere else.
+  base: process.env.BASE_PATH || "/",
   plugins: [emitManifest()],
   server: {
     port: 5173,

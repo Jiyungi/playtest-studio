@@ -5,7 +5,7 @@
       "id": "driving",
       "name": "VS Traffic",
       "description": "A top-down driving game: dodge obstacles, collect coins, beat a rival. Three lives; losing all of them ends the game.",
-      "playUrl": "/play.html",
+      "playUrl": "play.html",
       "engine": "src/engine.ts",
       "tuning": {
         "fields": [
