@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Kane Loop — Auto-fix on failed playtest",
+  "description": "When a Kane playtest writes .kiro/kane-report.json, read it; if any rule genuinely failed, fix the game logic and re-run the playtest until rules pass. Distinguishes a real rule failure from an environment error (Chrome/auth/timeout/server-down) and does not patch code for the latter.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      ".kiro/kane-report.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A Kane playtest just finished and wrote .kiro/kane-report.json. This is the verification half of the Playtest Studio loop (Kiro builds → Kane verifies → result feeds back into Kiro).\n\nDo the following:\n1. Read .kiro/kane-report.json.\n2. If \"allGreen\" is true, stop and report that all rules passed — no action needed.\n3. Inspect results[].status. Kane distinguishes two non-passing kinds:\n   - status \"error\" means Kane could NOT prove the rule (Chrome/auth not set up, a timeout, the dev server not running on :5173, or a parse error) — this is NOT a code defect. If EVERY non-passing rule is an \"error\", STOP and report the environment problem (e.g. \"start the dev server with npm run studio\", or run `kane-cli whoami` to check auth). Do NOT edit engine code to chase an environment error.\n   - status \"failed\" means Kane ran and the rule's assertion did not hold — this IS a real defect to fix.\n4. If \"followUp\" is present AND at least one rule has status \"failed\":\n   a. For each broken rule id in followUp.brokenRules whose status is \"failed\", read its statement in games.json and the matching tests/<rule>_test.md to understand the expected behavior.\n   b. Diagnose the root cause in the engine file named in followUp.message (e.g. src/engine.ts) — do not patch the test to make it pass; fix the actual game logic so the rule holds.\n   c. Run `npm run typecheck` to confirm the fix compiles.\n   d. Re-verify only the affected rules with `kane-cli testmd run tests/<rule>_test.md --agent --headless --retry --timeout 75`, OR run `npm run kane:verify` for the full suite.\n   e. If a rule still fails after two attempts, STOP and explain the root cause rather than patching further.\n\nNever edit a _test.md just to turn it green. The tests are the spec; fix the game."
+  }
+}

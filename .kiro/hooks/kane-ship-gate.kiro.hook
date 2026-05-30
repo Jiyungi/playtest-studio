@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Kane Ship Gate — prove all rules before shipping",
+  "description": "Manual gate to run before committing/shipping/demoing. Typechecks, builds, then runs the full Kane suite and refuses to pass unless every rule is green (exits non-zero on failure). Encodes 'a feature isn't done until a Kane rule proves it.' Requires the dev server to be running.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run typecheck && npm run build && npm run kane:verify",
+    "timeout": 900
+  }
+}

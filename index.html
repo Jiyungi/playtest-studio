@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playtest Studio — build a game, let Kane prove it works</title>
+    <link rel="stylesheet" href="/src/studio.css" />
+  </head>
+  <body>
+    <div id="studio">
+      <header class="studio-header">
+        <div>
+          <h1>Playtest&nbsp;Studio</h1>
+          <p class="sub">
+            Build a browser game. Declare its rules in plain English.
+            Let <strong>Kane</strong> play it and prove they hold — no human testers.
+          </p>
+        </div>
+        <span class="badge" data-testid="studio-badge">Built in Kiro · Verified by Kane CLI</span>
+      </header>
+
+      <div class="grid">
+        <!-- LEFT: build the game -->
+        <section class="card" aria-label="Build">
+          <h2>1 · Build</h2>
+          <p class="hint">Tune the game. The preview updates live.</p>
+          <div id="controls" class="controls" data-testid="controls"></div>
+          <div class="row">
+            <button id="open-game" data-testid="open-game" class="ghost">Open game ↗</button>
+            <button id="reset-tuning" data-testid="reset-tuning" class="ghost">Reset</button>
+          </div>
+        </section>
+
+        <!-- MIDDLE: live preview -->
+        <section class="card preview-card" aria-label="Preview">
+          <h2>Preview</h2>
+          <iframe
+            id="preview"
+            data-testid="preview"
+            title="Live game preview"
+            src="/play.html"
+          ></iframe>
+        </section>
+
+        <!-- RIGHT: rules + playtest -->
+        <section class="card" aria-label="Prove">
+          <h2>2 · Declare rules</h2>
+          <p class="hint">Each rule maps to a Kane scenario the studio can prove.</p>
+          <ul id="rules" class="rules" data-testid="rules"></ul>
+
+          <h2 class="mt">3 · Prove it works</h2>
+          <button id="run-playtest" data-testid="run-playtest" class="primary">
+            ▶ Run Playtest with Kane
+          </button>
+          <div id="playtest-status" class="playtest-status" data-testid="playtest-status"
+               data-state="idle">
+            Idle — no playtest run yet.
+          </div>
+          <ol id="results" class="results" data-testid="results"></ol>
+          <div id="loop-note" class="loop-note hidden" data-testid="loop-note"></div>
+        </section>
+      </div>
+
+      <footer class="studio-footer">
+        <span>Kiro builds → Kane verifies → the result feeds back into Kiro.</span>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/studio.ts"></script>
+  </body>
+</html>

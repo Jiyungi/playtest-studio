@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Kane Drift — keep rules and tests 1:1",
+  "description": "When games.json changes, ensure every declared rule maps to exactly one committable Kane test and vice versa (Requirement 2.2). Authors a missing test, flags an orphan test, so 'rules are data' never drifts from what Kane can prove.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "games.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "games.json (the single source of truth for games and rules) just changed. Keep the rules and their Kane tests in 1:1 sync — do not run a playtest here, just reconcile the spec.\n\n1. Read games.json. For the active game (and any other game present), collect every rule's id, statement, scenario, and test path.\n2. For each rule:\n   - If the referenced tests/<...>_test.md does NOT exist, author it: a minimal Kane testmd that opens the game's playUrl with ?scenario=<scenario>, then asserts the rule's statement by reading data-testid DOM nodes (never canvas pixels). Mirror the structure and front-matter (mode: testing, headless: true, timeout: 75) of the existing tests/*_test.md files.\n   - If the test exists, do nothing to it.\n3. List the files under tests/*_test.md. If any test file has NO matching rule in games.json, flag it as an orphan and ask whether to add a rule for it or remove the test — do not delete anything yourself.\n4. Do NOT edit a test merely to change its assertion; tests are the spec. Only create genuinely missing tests.\n5. Report a short summary: which tests were authored, which rules/tests are now in sync, and any orphans found."
+  }
+}

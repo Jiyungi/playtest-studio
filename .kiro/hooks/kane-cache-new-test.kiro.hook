@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Kane Cache — author replay cache for a new test",
+  "description": "When a new Kane test (tests/*_test.md) is created, run it once headless so its output-*/ replay cache is generated and can be committed (tech rule: commit replay caches so later runs replay instead of re-authoring). Requires the dev server to be running.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "tests/*_test.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A new Kane test file was just created under tests/. Generate its replay cache so future runs replay instead of re-authoring.\n\n1. Identify the newly created tests/<name>_test.md file.\n2. Confirm the dev server is reachable at http://localhost:5173 (if not, stop and tell the user to run `npm run studio`).\n3. Run it once headless: `kane-cli testmd run tests/<name>_test.md --agent --headless --retry --timeout 75`.\n4. Parse the terminal run_end event (never act on partial progress). If it passed, confirm the output-<name>/ replay cache directory now exists and remind the user to commit it alongside the test. If it failed, report the run_end reason — do NOT edit the test to force it green.\n5. Do not run the full suite; only the one new test."
+  }
+}

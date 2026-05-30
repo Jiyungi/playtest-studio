@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "name": "Kane Verify — fire on game logic or rules change",
+  "description": "When any game-behavior source (src/*.ts game runtime) or the rules manifest (games.json) is saved, typecheck first as a fast gate, then fire Kane to re-play the game and prove its rules still hold. Writes .kiro/kane-report.json, which the auto-fix hook then reacts to. Watching the manifest too keeps the loop game-agnostic: adding a game or rule re-verifies with no hook edit. Requires the dev server (npm run studio or npm run dev) to be running.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/engine.ts",
+      "src/main.ts",
+      "src/renderer.ts",
+      "src/tuning.ts",
+      "src/types.ts",
+      "src/rng.ts",
+      "games.json"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run typecheck && npm run kane:verify",
+    "timeout": 600
+  }
+}

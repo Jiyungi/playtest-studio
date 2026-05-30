@@ -1,0 +1,51 @@
+{
+  "game": "driving",
+  "generatedAt": "2026-05-30T21:50:58.159Z",
+  "passed": 4,
+  "total": 5,
+  "allGreen": false,
+  "results": [
+    {
+      "id": "menu",
+      "statement": "The game loads to a menu and a chosen mode starts play.",
+      "status": "passed",
+      "detail": "opened the play page on localhost",
+      "test": "tests/menu-smoke_test.md"
+    },
+    {
+      "id": "ready",
+      "statement": "A started game stays frozen at score 0 until the player's first move.",
+      "status": "error",
+      "detail": "Kane could not run (auth or Chrome setup). Try `kane-cli whoami`.",
+      "test": "tests/ready-gate_test.md"
+    },
+    {
+      "id": "collect",
+      "statement": "Collecting a coin (and surviving) increases the score.",
+      "status": "passed",
+      "detail": "All steps passed.",
+      "test": "tests/collect-coins_test.md"
+    },
+    {
+      "id": "crash",
+      "statement": "Hitting an obstacle costs a life.",
+      "status": "passed",
+      "detail": "All steps passed.",
+      "test": "tests/crash-loses-life_test.md"
+    },
+    {
+      "id": "gameover",
+      "statement": "Losing all lives ends the game and shows a final score.",
+      "status": "passed",
+      "detail": "All steps passed.",
+      "test": "tests/gameover_test.md"
+    }
+  ],
+  "followUp": {
+    "action": "fix",
+    "message": "Kane playtest of \"VS Traffic\" found 1 broken rule(s). Fix the game logic in src/engine.ts so these hold, then re-run `npm run kane:verify`:\n- [ready] A started game stays frozen at score 0 until the player's first move. → Kane could not run (auth or Chrome setup). Try `kane-cli whoami`.",
+    "brokenRules": [
+      "ready"
+    ]
+  }
+}

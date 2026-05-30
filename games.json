@@ -1,0 +1,57 @@
+{
+  "activeGame": "driving",
+  "games": {
+    "driving": {
+      "id": "driving",
+      "name": "VS Traffic",
+      "description": "A top-down driving game: dodge obstacles, collect coins, beat a rival. Three lives; losing all of them ends the game.",
+      "playUrl": "/play.html",
+      "engine": "src/engine.ts",
+      "tuning": {
+        "fields": [
+          { "key": "lives", "label": "Lives", "min": 1, "max": 9, "step": 1, "default": 3 },
+          { "key": "lanes", "label": "Lanes", "min": 2, "max": 6, "step": 1, "default": 4 },
+          { "key": "coinPoints", "label": "Coin value", "min": 0, "max": 100, "step": 5, "default": 10 },
+          { "key": "obstacleRatio", "label": "Obstacle ratio", "min": 0, "max": 1, "step": 0.05, "default": 0.6 },
+          { "key": "baseSpeed", "label": "Base speed", "min": 80, "max": 500, "step": 20, "default": 220 },
+          { "key": "speedRamp", "label": "Speed ramp", "min": 0, "max": 40, "step": 1, "default": 6 },
+          { "key": "maxSpeed", "label": "Max speed", "min": 200, "max": 1000, "step": 20, "default": 620 },
+          { "key": "spawnInterval", "label": "Spawn interval (s)", "min": 0.2, "max": 2, "step": 0.05, "default": 0.75 },
+          { "key": "passPoints", "label": "Survival points/s", "min": 0, "max": 10, "step": 1, "default": 1 }
+        ]
+      },
+      "rules": [
+        {
+          "id": "menu",
+          "statement": "The game loads to a menu and a chosen mode starts play.",
+          "scenario": "menu",
+          "test": "tests/menu-smoke_test.md"
+        },
+        {
+          "id": "ready",
+          "statement": "A started game stays frozen at score 0 until the player's first move.",
+          "scenario": "started",
+          "test": "tests/ready-gate_test.md"
+        },
+        {
+          "id": "collect",
+          "statement": "Collecting a coin (and surviving) increases the score.",
+          "scenario": "collect",
+          "test": "tests/collect-coins_test.md"
+        },
+        {
+          "id": "crash",
+          "statement": "Hitting an obstacle costs a life.",
+          "scenario": "crash",
+          "test": "tests/crash-loses-life_test.md"
+        },
+        {
+          "id": "gameover",
+          "statement": "Losing all lives ends the game and shows a final score.",
+          "scenario": "gameover",
+          "test": "tests/gameover_test.md"
+        }
+      ]
+    }
+  }
+}

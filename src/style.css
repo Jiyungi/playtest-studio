@@ -1,0 +1,152 @@
+:root {
+  --bg: #0e1117;
+  --panel: #1b2230;
+  --road: #2a2f3a;
+  --accent: #e06a3f;
+  --accent-2: #8fbf9f;
+  --text: #f4efe6;
+  --muted: #9aa3b2;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: min(520px, 100vw);
+  padding: 16px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  margin: 2px 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.hud-item {
+  background: var(--panel);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hud-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+}
+
+.hud-item span:last-child {
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.stage {
+  position: relative;
+  width: 480px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background: var(--road);
+  display: block;
+  touch-action: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 18, 0.72);
+  border-radius: 14px;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  width: 80%;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.panel.hidden {
+  display: none;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.panel button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.05s ease, filter 0.15s ease;
+}
+
+.panel button:hover {
+  filter: brightness(1.08);
+}
+
+.panel button:active {
+  transform: translateY(1px);
+}
+
+.controls-hint {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.footer {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
